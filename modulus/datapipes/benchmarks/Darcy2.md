@@ -1,6 +1,4 @@
-下面是關於Darcy2D數據管道的詳細Markdown描述：
 
-```markdown
 # Darcy2D數據管道
 
 Darcy2D數據管道是一種模擬工具，用於生成二維Darcy流問題的數據。這些數據可以用來訓練和測試數據驅動模型，例如機器學習模型或神經算子（如PINN或FNO）。

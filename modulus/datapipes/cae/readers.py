@@ -131,6 +131,35 @@ def read_cgns(file_path: str) -> Any:
     # Extract and return the vtkUnstructuredGrid from the multi-block dataset
     return _extract_unstructured_grid(multi_block)
 
+def read_legacy_vtk(file_path: str) -> Any:
+    """
+    Read a legacy VTK file and return the unstructured grid.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the legacy VTK file.
+
+    Returns
+    -------
+    vtkUnstructuredGrid
+        The unstructured grid read from the legacy VTK file.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"{file_path} does not exist.")
+
+    if not file_path.endswith(".vtk"):
+        raise ValueError(f"Expected a .vtk file, got {file_path}")
+
+    reader = vtk.vtkUnstructuredGridReader()
+    reader.SetFileName(file_path)
+    reader.Update()
+    unstructured_grid = reader.GetOutput()
+
+    if unstructured_grid is None:
+        raise ValueError(f"Failed to read unstructured grid data from {file_path}")
+
+    return unstructured_grid
 
 def _extract_unstructured_grid(
     multi_block: vtk.vtkMultiBlockDataSet,

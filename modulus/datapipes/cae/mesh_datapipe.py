@@ -38,7 +38,7 @@ from torch import Tensor
 from modulus.datapipes.datapipe import Datapipe
 from modulus.datapipes.meta import DatapipeMetaData
 
-from .readers import read_cgns, read_vtp, read_vtu
+from .readers import read_cgns, read_vtp, read_vtu, read_legacy_vtk
 
 
 @dataclass
@@ -64,7 +64,7 @@ class MeshDatapipe(Datapipe):
         Number of variables to be loaded from the files
     file_format : str, optional
         File format of the data, by default "vtp"
-        Supported formats: "vtp", "vtu", "cgns"
+        Supported formats: "vtp", "vtu", "cgns", "vtk" (vtk only for unstructured grid)
     stats_dir : Union[str, None], optional
         Directory where statistics are stored, by default None
         If provided, the statistics are used to normalize the attributes
@@ -148,6 +148,8 @@ class MeshDatapipe(Datapipe):
                 pattern = "*.vtu"
             case "cgns":
                 pattern = "*.cgns"
+            case "vtk":
+                pattern = "*.vtk"
             case _:
                 raise NotImplementedError(
                     f"Data type {self.file_format} is not supported yet"
@@ -366,6 +368,8 @@ class MeshDaliExternalSource:
             return read_vtu
         if self.file_format == "cgns":
             return read_cgns
+        if self.file_formt == "vtk":
+            return read_legacy_vtk
         else:
             raise NotImplementedError(
                 f"Data type {self.file_format} is not supported yet"
@@ -374,7 +378,7 @@ class MeshDaliExternalSource:
     def parse_vtk_data(self):
         if self.file_format == "vtp":
             return _parse_vtk_polydata
-        elif self.file_format in ["vtu", "cgns"]:
+        elif self.file_format in ["vtu", "cgns","vtk"]:
             return _parse_vtk_unstructuredgrid
         else:
             raise NotImplementedError(

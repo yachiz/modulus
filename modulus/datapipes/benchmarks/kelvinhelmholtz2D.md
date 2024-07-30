@@ -1,7 +1,7 @@
 # KelvinHelmholtz2D datapipe
 
 KelvinHelmholtz2D datapipe是一個模擬工具，用於生成Kelvin-Helmholtz不穩定性問題的數據樣本。這些樣本是隨機初始條件下生成的，並用於測試和訓練數據驅動模型。
-
+物理情境： Kelvin helmoltz instability 是在有剪力速度的連續流體內部或有速度差的兩個不同流體的介面之間發生的不穩定現象。 一個例子是風吹過水面時，在水面上表面的波的不穩定。而這種不穩定狀況更常見於雲、海洋、土星的雲帶、木星的大紅斑、太陽的日冕中。
 ## 核心功能
 
 1. **生成隨機初始條件**：

@@ -17,9 +17,9 @@
 import os
 import shutil
 import random
-
+# this one going into the data for training to move 80% of the file to new directories dataset/train; 10% dataset/validation; 10% dataset/test
 # Define the directory that contains the original files
-data_dir = "results"
+data_dir = "results" # this is where the download data download the vtp. file in
 
 # Define the directories for your train, validation, and test datasets
 train_dir = "./dataset/train"
